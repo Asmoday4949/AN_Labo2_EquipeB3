@@ -1,0 +1,80 @@
+<!--
+  Authors : Biloni Kim, Fleury Malik, Bulloni Lucas
+  Description : equation solver - dichotomic search
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Algorithme numérique - Résolution d'équations</title>
+		
+		<script src="bower_components/d3/d3.min.js"></script>
+		<script src="bower_components/function-plot/dist/function-plot.js"></script>
+	</head>
+	<body>
+		<h1>Algorithme numérique - Résolution d'équations<h1>
+		<hr />
+		<h2>Méthode par dichotomie</h2>
+		<div id="function1">
+			<script>
+			let function1 = 'sin(x)-x/13';
+			functionPlot(
+			{
+			title: function1,
+			width:580,
+			height:400,
+			disableZoom: false,
+			
+			xAxis:
+			{
+				label: 'x - axis',
+				domain: [-100, 100]
+			},
+			
+			yAxis:
+			{
+				label: 'y - axis',
+				domain: [-20, 20]
+			},
+			
+			target: '#function1',
+			data:
+			[{
+				fn: function1
+			}]
+			});
+			</script>
+		</div>
+		<div id="function2">
+			<script>
+			let function2 = 'x/(1-x*x)';
+			functionPlot(
+			{
+			title: function2,
+			width:580,
+			height:400,
+			disableZoom: false,
+			
+			xAxis:
+			{
+				label: 'x - axis',
+				domain: [-100, 100]
+			},
+			
+			yAxis:
+			{
+				label: 'y - axis',
+				domain: [-20, 20]
+			},
+			
+			target: '#function2',
+			data:
+			[{
+				fn: function2
+			}]
+			});
+			</script>
+		</div>
+	</body>
+</html>
