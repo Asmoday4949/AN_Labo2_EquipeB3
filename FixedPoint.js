@@ -20,8 +20,14 @@ class FixedPoint
 
     //while(from < this.boundaries[1])
     //{
-      solutions.push(this.fixedPointAlgorithm(from, 0.5, lambda));
-      from = solutions[solutions.length-1];
+      let solution = this.fixedPointAlgorithm(-8, 100, lambda);
+      console.log(solution !== undefined);
+      if(solution !== undefined)
+      {
+        console.log("ici");
+        solutions.push(solution);
+        from = solutions[solutions.length-1];
+      }
     //}
 
     return solutions;
@@ -53,22 +59,24 @@ class FixedPoint
     let x1 = gx(from);
 
     //va être utile par savoir si f(x) et g(x) divergent
-    let delta0 = Math.abs(x0-x1);
-    let delta1 = 0;
+    let delta1 = Math.abs(x0-x1);
+    let delta2 = 0;
 
-    while(this.doubleEquals(x0, x1))
+    while(!this.doubleEquals(x0, x1))
     {
       x0 = x1;
       x1 = gx(x1);
-      delta1 = Math.abs(x0-x1);
 
-      //Si ça diverve on inverse lambda et on reprend depuis le début
-      if(delta1 > delta2)
+      delta2 = Math.abs(x0-x1);
+
+      //Si ça diverge on inverse lambda et on reprend depuis le début
+      if(delta1 < delta2)
       {
         lambda *= -1;
         gx = this.findGX(this.fx, lambda);
         x0 = from;
         x1 = gx(from);
+        delta1 = Math.abs(x0-x1);
       }
 
       i--;
@@ -78,8 +86,7 @@ class FixedPoint
       }
     }
 
-    return x0;
-
+    return x1;
   }
 
   //trouve g(x) avec this.fx et le lambda
