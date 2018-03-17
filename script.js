@@ -5,9 +5,18 @@ document.addEventListener('DOMContentLoaded', function(event) {
   let fixedPointFunc1 = new FixedPoint(function(x) {
     return Math.sin(x)-x/13
   }, [-100, 100], '#function1');
-  fixedPointFunc1.displayPlot();
 
-  let function2 = 'x/(1-x*x)';
+  fixedPointFunc1.displayPlot();
+  let solutions1 = fixedPointFunc1.solve();
+
+  let fixedPointFunc2 = new FixedPoint(function(x) {
+    return x/(1-x*x)-x/13
+  }, [-100, 100], '#function2');
+
+  fixedPointFunc2.displayPlot();
+  let solutions2 = fixedPointFunc2.solve();
+
+  /*let function2 = 'x/(1-x*x)';
   functionPlot({
     title: function2,
     width:580,
@@ -31,5 +40,5 @@ document.addEventListener('DOMContentLoaded', function(event) {
     [{
       fn: function2
     }]
-  });
+  });*/
 });
