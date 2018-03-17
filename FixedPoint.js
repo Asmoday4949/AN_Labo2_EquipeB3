@@ -3,11 +3,12 @@
  */
 class FixedPoint
 {
-  constructor(fx, boundaries, divTarget)
+  constructor(fx, boundaries, divTargetID)
   {
     this.fx = fx;
     this.boundaries = boundaries;
-    this.divTarget = divTarget;
+    this.divTarget = divTargetID;
+    this.solutions = null;
   }
 
   //lance l'algorithme et trouve toutes les réponses
@@ -37,6 +38,7 @@ class FixedPoint
       }
     }
 
+    this.solutions = solutions; 
     return solutions;
   }
 
@@ -144,11 +146,27 @@ class FixedPoint
         domain: [-20, 20]
       },
 
-      target: this.divTarget,
+      target: "#".concat(this.divTarget),
       data:
       [{
         fn: function1
       }]
     });
+  }
+
+  displayValue(IDp)
+  {
+    let tab = "<table>"
+    tab += "<th>Zeros de la fonction</th>";
+    this.solutions.forEach(function(element)
+    {
+      tab += "<tr>";
+      tab += "<td>";
+      tab += element;
+      tab += "</td>";
+      tab += "</tr>";
+    });
+    tab += "</table>"
+    document.getElementById(IDp).innerHTML = tab;
   }
 }

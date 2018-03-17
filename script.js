@@ -6,18 +6,20 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
   let fixedPointFunc1 = new FixedPoint(function(x) {
     return Math.sin(x)-x/13;
-  }, boundaries, '#function1');
+  }, boundaries, 'function1');
 
   fixedPointFunc1.displayPlot();
   let solutions1 = fixedPointFunc1.solve();
+  fixedPointFunc1.displayValue('f1Zeros');
   console.log(solutions1);
 
   let fixedPointFunc2 = new FixedPoint(function(x) {
     return x/(1-x*x);
-  }, boundaries, '#function2');
+  }, boundaries, 'function2');
 
   fixedPointFunc2.displayPlot();
   let solutions2 = fixedPointFunc2.solve();
+  fixedPointFunc2.displayValue('f2Zeros');
   console.log(solutions2);
 
   /*let function2 = 'x/(1-x*x)';
