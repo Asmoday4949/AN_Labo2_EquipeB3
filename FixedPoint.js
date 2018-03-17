@@ -17,6 +17,8 @@ class FixedPoint
     let from = this.boundaries[0];
     let solutions = [];
     let lambda = 1;
+    //si on renvient à la même valeur ou qu'aucune solution n'est trouvé pour cette tranche
+    //on doit avancer petit à petit
     const step = 1;
     const decimals = 5;
 
@@ -24,10 +26,10 @@ class FixedPoint
     {
       let solution = this.fixedPointAlgorithm(from, 100, lambda);
 
+      //vérifie que la valeur n'est pas déjà présente
       if(solution !== undefined && !this.arrIncludeDouble(solutions, solution))
       {
         solutions.push(solution);
-        from = solutions[solutions.length-1];
       }
       else
       {
@@ -52,6 +54,7 @@ class FixedPoint
 		}
   }
 
+  //vérifie qu'un double soit dans un array avec la marge d'erreur epsilon
   arrIncludeDouble(arr, val, epsilon = 1e-6)
   {
     for(let i = 0; i < arr.length; i++)

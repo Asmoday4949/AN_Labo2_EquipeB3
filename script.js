@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
   }, boundaries, '#function2');
 
   fixedPointFunc2.displayPlot();
-  //let solutions2 = fixedPointFunc2.solve();
-  //console.log(solutions2);
+  let solutions2 = fixedPointFunc2.solve();
+  console.log(solutions2);
 
   /*let function2 = 'x/(1-x*x)';
   functionPlot({
