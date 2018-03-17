@@ -17,25 +17,30 @@ class FixedPoint
     let from = this.boundaries[0];
     let solutions = [];
     let lambda = 1;
+    const step = 1;
+    const decimals = 5;
 
-    //while(from < this.boundaries[1])
-    //{
-      let solution = this.fixedPointAlgorithm(-8, 100, lambda);
-      console.log(solution !== undefined);
-      if(solution !== undefined)
+    while(from < this.boundaries[1])
+    {
+      let solution = this.fixedPointAlgorithm(from, 100, lambda);
+
+      if(solution !== undefined && !this.arrIncludeDouble(solutions, solution))
       {
-        console.log("ici");
         solutions.push(solution);
         from = solutions[solutions.length-1];
       }
-    //}
+      else
+      {
+          from += step;
+      }
+    }
 
     return solutions;
   }
 
 
   //Vérifie que deux doubles soient égaux à lambda près
-  doubleEquals(a, b, epsilon = 1e-10)
+  doubleEquals(a, b, epsilon = 1e-6)
   {
     if (a != 0 && b != 0)
 		{
@@ -47,11 +52,23 @@ class FixedPoint
 		}
   }
 
-  //trouve une des racine depuis from
-  fixedPointAlgorithm(from, maxTry, lambda)
+  arrIncludeDouble(arr, val, epsilon = 1e-6)
   {
-    // dans le cas où les fonctions ne divergent pas il ne faut pas partir en boucle infinie
-    let i = maxTry;
+    for(let i = 0; i < arr.length; i++)
+    {
+      if(this.doubleEquals(arr[i], val, epsilon))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  //trouve une des racine depuis from
+  //i étant le nombre d'essai max pour ne partie en boucle infinie
+  fixedPointAlgorithm(from, i, lambda)
+  {
     let gx = this.findGX(this.fx, lambda);
 
     //résultats intermédiaires
