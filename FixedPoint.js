@@ -255,7 +255,7 @@ class FixedPoint
                   0.1, gx, this.holes);
    let gxPlot =
    {
-      name: 'x+\u039B*x',
+      name: 'x+\u039B*f(x)',
       x: gxPoints[0],
  		y: gxPoints[1],
  		type: 'scatter'
