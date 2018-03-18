@@ -77,7 +77,6 @@ class FixedPoint
   //i étant le nombre d'essai max pour ne partie en boucle infinie
   fixedPointAlgorithm(from, i, lambda)
   {
-    this.lambda = lambda;
     let gx = this.findGX(this.fx, lambda);
 
     //résultats intermédiaires
@@ -98,7 +97,7 @@ class FixedPoint
       //Si ça diverge on inverse lambda et on reprend depuis le début
       if(delta1 < delta2)
       {
-        this.lambda = lambda *= -1;
+        lambda *= -1;
         gx = this.findGX(this.fx, lambda);
         x0 = from;
         x1 = gx(from);
@@ -212,7 +211,23 @@ class FixedPoint
   //PathStart : indique où doit commencer la recherche, afin de pouvoir dessiner le tracé
   displayPlot(pathStart=undefined)
   {
+   let lambda = 1;
    let plotData = []; // Contient toutes les données de chaque graphe
+
+   if(pathStart!=undefined)
+   {
+     let path = this.fixedPointAlgoWithPlotData(parseFloat(pathStart), 100, lambda);
+     let pathPlot =
+     {
+        name: 'path',
+        x: path[1],
+        y: path[2],
+        type: 'scatter'
+     };
+     lambda = path[3];
+
+     plotData.push(pathPlot);
+   }
 
    let fxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
                   0.1, this.fx, this.holes);
@@ -223,7 +238,6 @@ class FixedPoint
 		y: fxPoints[1],
 		type: 'scatter'
 	};
-   plotData.push(fxPlot);
 
    let hx = function(x){return x};
    let hxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
@@ -235,9 +249,8 @@ class FixedPoint
  		y: hxPoints[1],
  		type: 'scatter'
    };
-   plotData.push(hxPlot);
 
-   let gx = this.findGX(this.fx, this.lambda);
+   let gx = this.findGX(this.fx, lambda);
    let gxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
                   0.1, gx, this.holes);
    let gxPlot =
@@ -247,21 +260,10 @@ class FixedPoint
  		y: gxPoints[1],
  		type: 'scatter'
    };
-   plotData.push(gxPlot);
 
-   if(pathStart!=undefined)
-   {
-     let path = this.fixedPointAlgoWithPlotData(parseFloat(pathStart), 100, 1);
-     let pathPlot =
-     {
-        name: 'path',
-        x: path[1],
-        y: path[2],
-        type: 'scatter'
-     };
-
-      plotData.push(pathPlot);
-   }
+   plotData.unshift(gxPlot);
+   plotData.unshift(hxPlot);
+   plotData.unshift(fxPlot);
 
  	let layout =
  	{
