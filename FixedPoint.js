@@ -77,6 +77,7 @@ class FixedPoint
   //i étant le nombre d'essai max pour ne partie en boucle infinie
   fixedPointAlgorithm(from, i, lambda)
   {
+    this.lambda = lambda;
     let gx = this.findGX(this.fx, lambda);
 
     //résultats intermédiaires
@@ -97,7 +98,7 @@ class FixedPoint
       //Si ça diverge on inverse lambda et on reprend depuis le début
       if(delta1 < delta2)
       {
-        lambda *= -1;
+        this.lambda = lambda *= -1;
         gx = this.findGX(this.fx, lambda);
         x0 = from;
         x1 = gx(from);
@@ -151,7 +152,7 @@ class FixedPoint
    return [xData, yData];
   }
 
-  //trouve une des racine depuis from
+  //permet d'avoir toutes les positions pour effectuer le tracé
   //i étant le nombre d'essai max pour ne partie en boucle infinie
   fixedPointAlgoWithPlotData(from, i, lambda)
   {
@@ -204,7 +205,7 @@ class FixedPoint
       i--;
     }
 
-    return [x1, xData, yData];
+    return [x1, xData, yData, lambda];
   }
 
   //affiche le plot dans this.divTarget
@@ -215,13 +216,13 @@ class FixedPoint
 
    let fxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
                   0.1, this.fx, this.holes);
- 	let fxPlot =
- 	{
-      name: 'f(x)',
- 		x: fxPoints[0],
- 		y: fxPoints[1],
- 		type: 'scatter'
- 	};
+	let fxPlot =
+	{
+		name: 'f(x)',
+		x: fxPoints[0],
+		y: fxPoints[1],
+		type: 'scatter'
+	};
    plotData.push(fxPlot);
 
    let hx = function(x){return x};
@@ -236,7 +237,7 @@ class FixedPoint
    };
    plotData.push(hxPlot);
 
-   let gx = this.findGX(this.fx, 1);
+   let gx = this.findGX(this.fx, this.lambda);
    let gxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
                   0.1, gx, this.holes);
    let gxPlot =
@@ -250,14 +251,14 @@ class FixedPoint
 
    if(pathStart!=undefined)
    {
-      let path = this.fixedPointAlgoWithPlotData(parseFloat(pathStart), 100, 1);
-      let pathPlot =
-      {
-         name: 'path',
-         x: path[1],
-         y: path[2],
-         type: 'scatter'
-      };
+     let path = this.fixedPointAlgoWithPlotData(parseFloat(pathStart), 100, 1);
+     let pathPlot =
+     {
+        name: 'path',
+        x: path[1],
+        y: path[2],
+        type: 'scatter'
+     };
 
       plotData.push(pathPlot);
    }
@@ -275,7 +276,7 @@ class FixedPoint
  		yaxis:
  		{
  			range: [-30,30],
-         autorange: false
+			autorange: false
  		},
  		hovermode: "closest"
  	};

@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     return Math.sin(x)-x/13;
   }, boundaries, 'function1');
 
-  fixedPointFunc1.displayPlot();
   let solutions1 = fixedPointFunc1.solve();
+  fixedPointFunc1.displayPlot();
   fixedPointFunc1.displayValue('f1Zeros');
   console.log(solutions1);
 
@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     return x/(1-x*x);
 }, boundaries, 'function2', [-1,1]);
 
+   let solutions2 = fixedPointFunc2.solve();
   fixedPointFunc2.displayPlot();
-  let solutions2 = fixedPointFunc2.solve();
   fixedPointFunc2.displayValue('f2Zeros');
   console.log(solutions2);
 });
