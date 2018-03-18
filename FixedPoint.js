@@ -125,21 +125,22 @@ class FixedPoint
   }
 
   //permet de calculer tous les points de la fonction
-  computeEachPoint(min, max, step)
+  computeEachPoint(min, max, step, fx, holes=[])
   {
    let xData = [];
    let yData = [];
+   let holeIndex = 0;
 
    for(let i = min;i <= max; i += step)
    {
       xData.push(i);
-      let y = this.fx(i);
+      let y = fx(i);
 
       //on gère les trous de la fonction
-      if(this.holes.length > 0 && this.doubleEquals(this.holes[0], i))
+      if(this.holes.length > 0 && this.doubleEquals(holes[holeIndex], i))
       {
          yData.push(undefined);
-         this.holes.shift();
+         holeIndex++;
       }
       else
       {
@@ -153,30 +154,59 @@ class FixedPoint
   //affiche le plot dans this.divTarget
   displayPlot()
   {
-   let fxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1], 0.1);
- 	var fxPlot =
+   let fxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
+                  0.1, this.fx, this.holes);
+ 	let fxPlot =
  	{
+      name: 'f(x)',
  		x: fxPoints[0],
  		y: fxPoints[1],
  		type: 'scatter'
  	};
 
+   let hx = function(x){return x};
+   let hxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
+                  0.1, hx);
+   let hxPlot =
+   {
+      name: 'x',
+      x: hxPoints[0],
+ 		y: hxPoints[1],
+ 		type: 'scatter'
+   };
+
+   let gx = this.findGX(this.fx, 1);
+   let gxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
+                  0.1, gx, this.holes);
+   let gxPlot =
+   {
+      name: 'x+\u039B*x',
+      x: gxPoints[0],
+ 		y: gxPoints[1],
+ 		type: 'scatter'
+   };
+
  	let layout =
  	{
+      width: 768,
+      height: 768,
+
  		xaxis:
  		{
- 			range: [-100,100]
+ 			range: [this.boundaries[0], this.boundaries[1]],
+         autorange: false
  		},
  		yaxis:
  		{
- 			range: [-50,50]
+ 			range: [-30,30],
+         autorange: false
  		},
- 		hovermode: 'closest'
+ 		hovermode: "closest"
  	};
 
- 	let data = [fxPlot];
+ 	let data = [fxPlot, hxPlot, gxPlot];
 
- 	Plotly.newPlot(this.divTarget, data);
+ 	Plotly.newPlot(this.divTarget, data, layout);
   }
 
   displayValue(IDp)
