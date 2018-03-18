@@ -151,9 +151,68 @@ class FixedPoint
    return [xData, yData];
   }
 
-  //affiche le plot dans this.divTarget
-  displayPlot()
+  //trouve une des racine depuis from
+  //i étant le nombre d'essai max pour ne partie en boucle infinie
+  fixedPointAlgoWithPlotData(from, i, lambda)
   {
+    let xData = [];
+    let yData = [];
+    let gx = this.findGX(this.fx, lambda);
+
+    //résultats intermédiaires
+    let x0 = from;
+    xData.push(x0);
+    yData.push(0);
+    let x1 = gx(from);
+    xData.push(x0);
+    yData.push(x1);
+
+    //va être utile par savoir si f(x) et g(x) divergent
+    let delta1 = Math.abs(x0-x1);
+    let delta2 = 0;
+
+    while(!this.doubleEquals(x0, x1) && i > 0)
+    {
+      x0 = x1;
+      xData.push(x0);
+      yData.push(x0);
+      x1 = gx(x1);
+      xData.push(x0);
+      yData.push(x1);
+
+      delta2 = Math.abs(x0-x1);
+
+      //Si ça diverge on inverse lambda et on reprend depuis le début
+      if(delta1 < delta2)
+      {
+        xData = [];
+        yData = [];
+
+        lambda *= -1;
+        gx = this.findGX(this.fx, lambda);
+        x0 = from;
+        xData.push(x0);
+        yData.push(0);
+
+        x1 = gx(from);
+        xData.push(x0);
+        yData.push(x1);
+
+        delta1 = Math.abs(x0-x1);
+      }
+
+      i--;
+    }
+
+    return [x1, xData, yData];
+  }
+
+  //affiche le plot dans this.divTarget
+  //PathStart : indique où doit commencer la recherche, afin de pouvoir dessiner le tracé
+  displayPlot(pathStart=undefined)
+  {
+   let plotData = []; // Contient toutes les données de chaque graphe
+
    let fxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
                   0.1, this.fx, this.holes);
  	let fxPlot =
@@ -163,6 +222,7 @@ class FixedPoint
  		y: fxPoints[1],
  		type: 'scatter'
  	};
+   plotData.push(fxPlot);
 
    let hx = function(x){return x};
    let hxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
@@ -174,6 +234,7 @@ class FixedPoint
  		y: hxPoints[1],
  		type: 'scatter'
    };
+   plotData.push(hxPlot);
 
    let gx = this.findGX(this.fx, 1);
    let gxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1],
@@ -185,6 +246,21 @@ class FixedPoint
  		y: gxPoints[1],
  		type: 'scatter'
    };
+   plotData.push(gxPlot);
+
+   if(pathStart!=undefined)
+   {
+      let path = this.fixedPointAlgoWithPlotData(parseFloat(pathStart), 100, 1);
+      let pathPlot =
+      {
+         name: 'path',
+         x: path[1],
+         y: path[2],
+         type: 'scatter'
+      };
+
+      plotData.push(pathPlot);
+   }
 
  	let layout =
  	{
@@ -204,9 +280,7 @@ class FixedPoint
  		hovermode: "closest"
  	};
 
- 	let data = [fxPlot, hxPlot, gxPlot];
-
- 	Plotly.newPlot(this.divTarget, data, layout);
+ 	Plotly.newPlot(this.divTarget, plotData, layout);
   }
 
   displayValue(IDp)
