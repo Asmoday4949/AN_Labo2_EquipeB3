@@ -58,16 +58,16 @@
 		<p>
 			Pour réaliser ce travail, nous avons commencé par discuter entre nous pour savoir quelle méthode nous allions implémenter.
 			Nous avons choisi la méthode du point fixe par élémination des deux autres.
-			Avec la méthode par dichotomie il y avait un problème dans le cas où la fonction est de même signe aux deux bornes mais possède des solutions entre, nous n'avions pas vu rapidement comment résoudre ce problème.
-			<br>Et quant à la méthode par les droites tangeante nous pensons qu'il aurait été nécessaires de calculer les dérivées, ce qui limitait le calcul uniquement aux deux fonctions avec lesquels il fallait tester.
+			Avec la méthode par dichotomie, il y avait un problème dans le cas où la fonction est de même signe aux deux bornes mais possède des solutions entre, nous n'avions pas vu rapidement comment résoudre ce problème.
+			<br>Et quant à la méthode par les droites tangeante, nous pensons qu'il aurait été nécessaires de calculer les dérivées, ce qui limitait le calcul uniquement aux deux fonctions avec lesquelles il fallait tester.
 		</p>
 		<p>
-			Nous avons essayé de fournir un code qui fonctionne avec un maximum de fonction possible, pour cela nous avons créé une classe qui prend en paramètre la fonction mathématique, la div dans laquelle elle sera dessinée et les bornes limites.
+			Nous avons essayé de fournir un code qui fonctionne avec un maximum de fonctions possibles, pour cela nous avons créé une classe qui prend en paramètre la fonction mathématique, la div dans laquelle elle sera dessinée et les bornes limites.
 			Ensuite il est possible d'afficher la fonction avec .displayPlot(), afficher les résultats avec .displayValue() et récupérer les résultats avec .solve().<br>
-			Nous avons commencé par établir quelle fonction seraient utiles dans la classe et nous nous sommes réparti le travail en fonction de nos préférences.
+			Nous avons commencé par établir quelles fonctions seraient utiles dans la classe et nous nous sommes réparti le travail en fonction de nos préférences.
 		</p>
 		<p>
-			La bibliothèque javascript utilisée pour afficher le graphique est <a href="https://plot.ly/javascript/">plotlyjs</a>. Nous avions commencé par utilisé <a href="https://github.com/mauriciopoppe/function-plot">functionplot.js</a> mais il était nécessaire de passer les fonctions en string et non en fonction anonyme.<br />
+			La bibliothèque javascript utilisée pour afficher le graphique est <a href="https://plot.ly/javascript/">plotlyjs</a>. Nous avions commencé par utiliser <a href="https://github.com/mauriciopoppe/function-plot">functionplot.js</a> mais il était nécessaire de passer les fonctions en string et non en fonction anonyme.<br />
 			Après une brève recherche nous avons donc trouvé plotly.js qui semble remplir nos besoins.
 			<ul>
 				<li>Afficher plusieurs fonctions sur un graph.</li>
