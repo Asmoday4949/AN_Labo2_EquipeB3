@@ -3,12 +3,15 @@
  */
 class FixedPoint
 {
-  constructor(fx, boundaries, divTargetID)
+  constructor(fx, boundaries, divTargetID, holes=[])
   {
     this.fx = fx;
     this.boundaries = boundaries;
     this.divTarget = divTargetID;
     this.solutions = null;
+    this.holes = holes;
+
+    this.holes.sort();
   }
 
   //lance l'algorithme et trouve toutes les réponses
@@ -38,7 +41,7 @@ class FixedPoint
       }
     }
 
-    this.solutions = solutions; 
+    this.solutions = solutions;
     return solutions;
   }
 
@@ -121,37 +124,59 @@ class FixedPoint
     };
   }
 
+  //permet de calculer tous les points de la fonction
+  computeEachPoint(min, max, step)
+  {
+   let xData = [];
+   let yData = [];
+
+   for(let i = min;i <= max; i += step)
+   {
+      xData.push(i);
+      let y = this.fx(i);
+
+      //on gère les trous de la fonction
+      if(this.holes.length > 0 && this.doubleEquals(this.holes[0], i))
+      {
+         yData.push(undefined);
+         this.holes.shift();
+      }
+      else
+      {
+         yData.push(y);
+      }
+   }
+
+   return [xData, yData];
+  }
 
   //affiche le plot dans this.divTarget
   displayPlot()
   {
-    let function1 = 'sin(x)-x/13';
+   let fxPoints = this.computeEachPoint(-100, 100, 0.1);
+ 	var fxPlot =
+ 	{
+ 		x: fxPoints[0],
+ 		y: fxPoints[1],
+ 		type: 'scatter'
+ 	};
 
-    functionPlot(
-    {
-      title: function1,
-      width:580,
-      height:400,
-      disableZoom: false,
+ 	let layout =
+ 	{
+ 		xaxis:
+ 		{
+ 			range: [-100,100]
+ 		},
+ 		yaxis:
+ 		{
+ 			range: [-50,50]
+ 		},
+ 		hovermode: 'closest'
+ 	};
 
-      xAxis:
-      {
-        label: 'x - axis',
-        domain: [-100, 100]
-      },
+ 	let data = [fxPlot];
 
-      yAxis:
-      {
-        label: 'y - axis',
-        domain: [-20, 20]
-      },
-
-      target: "#".concat(this.divTarget),
-      data:
-      [{
-        fn: function1
-      }]
-    });
+ 	Plotly.newPlot(this.divTarget, data);
   }
 
   displayValue(IDp)
