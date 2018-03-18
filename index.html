@@ -16,6 +16,26 @@
 			tr, th, td {
 				border: 1px solid black;
 			}
+
+			#f1, #f2{
+				display: flex;
+				flex-direction: row;
+				margin-left: auto;
+				margin-right: auto;
+				width: 50%;
+			}
+
+			#function1, #function2{
+				order: 1;
+			}
+
+			#funcData1, #funcData2{
+				order: 2;
+				margin-top: auto;
+				margin-bottom: auto;
+				height: 50%;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -42,30 +62,31 @@
 		<div id="f1">
 			<div id="function1">
 			</div>
-
-			<form method="post" action="#" onsubmit="showPathOnFunction1(); return false;">
-				<label for="entryPoint1">
-					Valeur de point d'entrée :<br />
-					<input type="text" name="entryPoint1" id="entryPoint1" value=2 required>
-				</label>
-				<input type="submit" value="Voir le tracé !">
-			</form>
-
-			<p id="f1Zeros">
+			<div id="funcData1">
+				<form method="post" action="#" onsubmit="showPathOnFunction1(); return false;">
+					<label for="entryPoint1">
+						Valeur de point d'entrée :<br />
+						<input type="text" name="entryPoint1" id="entryPoint1" value=2 required>
+					</label>
+					<input type="submit" value="Voir le tracé !">
+				</form>
+				<p id="f1Zeros">
+			</div>
 		</div>
-		<div>
+		<hr />
+		<div id="f2">
 			<div id="function2">
 			</div>
-
-			<form method="post" action="#" onsubmit="showPathOnFunction2(); return false;">
-				<label for="entryPoint2">
-					Valeur de point d'entrée :<br />
-					<input type="text" name="entryPoint2" id="entryPoint2" value=2 required>
-				</label>
-				<input type="submit" value="Voir le tracé !">
-			</form>
-
-			<p id="f2Zeros">
+			<div id="funcData2">
+				<form method="post" action="#" onsubmit="showPathOnFunction2(); return false;">
+					<label for="entryPoint2">
+						Valeur de point d'entrée :<br />
+						<input type="text" name="entryPoint2" id="entryPoint2" value=2 required>
+					</label>
+					<input type="submit" value="Voir le tracé !">
+				</form>
+				<p id="f2Zeros">
+			</div>
 		</div>
 		<hr />
 		<h2>Conclusion et perspectives</h2>
