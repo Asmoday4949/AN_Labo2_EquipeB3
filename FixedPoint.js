@@ -294,7 +294,7 @@ class FixedPoint
     {
       tab += "<tr>";
       tab += "<td>";
-      tab += element;
+      tab += element.toPrecision(4);
       tab += "</td>";
       tab += "</tr>";
     });
