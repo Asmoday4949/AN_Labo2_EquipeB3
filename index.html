@@ -39,7 +39,7 @@
 		</style>
 	</head>
 	<body>
-		<h1>Algorithmes numériques - Résolution d'équations<h1>
+		<h1>Algorithmes numériques - Résolution d'équations</h1>
 		<h4>TP réalisé par Biloni Kim Aurore, Bulloni Lucas &amp; Fleury Malik</h4>
 		<hr />
 		<h2>Contexte</h2>
@@ -49,26 +49,46 @@
 			Nous avions le choix entre les algorithmes suivants :
 			<ul>
 				<li>Algorithme de Bolzano, par dichotomie</li>
-				<li>Algorithme de La Grange, méthode de la droite tangente</li>
-				<li>Algorithme de Newton, méthode du point fixe</li>
+				<li>Algorithme de Newton, méthode de la droite tangente</li>
+				<li>Algorithme de La Grange, méthode du point fixe</li>
 			</ul>
-			Chacun de ses algorithmes ont leurs avantages et inconvénients. Nous avons choisi d'implémenter la méthode du point fixe.
+			Chacun de ses algorithmes ont leurs avantages et inconvénients. Nous avons choisi d'implémenter la méthode du point fixe à cause de sa simplicité à implémenter et son efficacité dans les cas où elle fonctionne.
 		<hr />
 		<h2>Méthodologie de développement</h2>
 		<p>
-			queskonafait
+			Pour réaliser ce travail, nous avons commencé par discuter entre nous pour savoir quelle méthode nous allions implémenter.
+			Nous avons choisi la méthode du point fixe par élémination des deux autres.
+			Avec la méthode par dichotomie il y avait un problème dans le cas où la fonction est de même signe aux deux bornes mais possède des solutions entre, nous n'avions pas vu rapidement comment résoudre ce problème.
+			<br>Et quant à la méthode par les droites tangeante nous pensons qu'il aurait été nécessaires de calculer les dérivées, ce qui limitait le calcul uniquement aux deux fonctions avec lesquels il fallait tester.
+		</p>
+		<p>
+			Nous avons essayé de fournir un code qui fonctionne avec un maximum de fonction possible, pour cela nous avons créé une classe qui prend en paramètre la fonction mathématique, la div dans laquelle elle sera dessinée et les bornes limites.
+			Ensuite il est possible d'afficher la fonction avec .displayPlot(), afficher les résultats avec .displayValue() et récupérer les résultats avec .solve().<br>
+			Nous avons commencé par établir quelle fonction seraient utiles dans la classe et nous nous sommes réparti le travail en fonction de nos préférences.
+		</p>
+		<p>
+			La bibliothèque javascript utilisée pour afficher le graphique est <a href="https://plot.ly/javascript/">plotlyjs</a>. Nous avions commencé par utilisé <a href="https://github.com/mauriciopoppe/function-plot">functionplot.js</a> mais il était nécessaire de passer les fonctions en string et non en fonction anonyme.<br />
+			Après une brève recherche nous avons donc trouvé plotly.js qui semble remplir nos besoins.
+			<ul>
+				<li>Afficher plusieurs fonctions sur un graph.</li>
+				<li>Dessiner des lignes horizontales où verticales</li>
+				<li>Afficher les axes avec l'échelle</li>
+				<li>Pouvoir zoomer</li>
+			</ul>
+		</p>
 		<hr />
 		<h2>Implémentation de la méthode du point fixe</h2>
 		<h3>f(x) = sin(x)-x/13</h3>
+		<h3>g(x) = λ(sin(x)-x/13)+x | λ = 1 ou -1</h3>
 		<div id="f1">
 			<div id="function1">
-				
+
 			</div>
 			<div id="funcData1">
 				<form method="post" action="#" onsubmit="showPathOnFunction1(); return false;">
 					<label for="entryPoint1">
 						Valeur de point d'entrée :<br />
-						<input type="number" name="entryPoint1" id="entryPoint1" value=2 step=0.5 required>
+						<input type="number" name="entryPoint1" id="entryPoint1" value=2 step="0.5" required>
 					</label>
 					<input type="submit" value="Voir le tracé !">
 				</form>
@@ -77,6 +97,7 @@
 		</div>
 		<hr />
 		<h3>f(x) = x/(1-x<SUP>2</SUP>)</h3>
+		<h3>g(x) = λ(x/(1-x<sup>2</sup>))+x | λ = 1 ou -1</h3>
 		<div id="f2">
 			<div id="function2">
 			</div>
@@ -95,5 +116,6 @@
 		<h2>Conclusion et perspectives</h2>
 		<p>
 			queskonafait
+		</p>
 	</body>
 </html>

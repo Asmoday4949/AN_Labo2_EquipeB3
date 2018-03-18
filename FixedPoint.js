@@ -105,6 +105,7 @@ class FixedPoint
       }
 
       i--;
+      //si rien de trouvé on renvoie une réponse indéfini
       if(i <= 0)
       {
         return undefined;
