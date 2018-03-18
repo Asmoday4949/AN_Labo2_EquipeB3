@@ -153,7 +153,7 @@ class FixedPoint
   //affiche le plot dans this.divTarget
   displayPlot()
   {
-   let fxPoints = this.computeEachPoint(-100, 100, 0.1);
+   let fxPoints = this.computeEachPoint(this.boundaries[0], this.boundaries[1], 0.1);
  	var fxPlot =
  	{
  		x: fxPoints[0],
